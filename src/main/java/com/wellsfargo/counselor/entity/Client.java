@@ -1,61 +1,44 @@
 package com.wellsfargo.counselor.entity;
 
-
 import jakarta.persistence.*;
 
-import java.util.Set;
-
 @Entity
-public class Advisor {
+public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long advisorId;
+    private long clientId;
 
+    @ManyToOne
+    @JoinColumn(name = "advisor_id",nullable = false)
+    private Advisor advisor;
     @Column(nullable = false)
     private String firstName;
-
     @Column(nullable = false)
     private String lastName;
-
     @Column(nullable = false)
     private String address;
-
     @Column(nullable = false)
     private String phone;
-
     @Column(nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "advisor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Client> clients;
-    protected Advisor() {
-
+    public Advisor getAdvisor() {
+        return advisor;
     }
 
-    public Advisor(String firstName, String lastName, String address, String phone, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
+    public void setAdvisor(Advisor advisor) {
+        this.advisor = advisor;
     }
 
-    public void setAdvisorId(long advisorId) {
-        this.advisorId = advisorId;
+    public long getClientId() {
+        return clientId;
     }
 
-    public Set<Client> getClients() {
-        return clients;
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
     }
 
-    public void setClients(Set<Client> clients) {
-        this.clients = clients;
-    }
-
-    public Long getAdvisorId() {
-        return advisorId;
-    }
 
     public String getFirstName() {
         return firstName;
